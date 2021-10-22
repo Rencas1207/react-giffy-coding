@@ -1,25 +1,32 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import { Route, Link } from 'wouter';
 
-export default App;
+import { Home } from './pages/Home/Home';
+import { Detail } from './pages/Detail/Detail';
+import { SearchResults } from './pages/SearchResults/SearchResults';
+
+import { StaticContext } from './context/StaticContext';
+import { GifsContextProvider } from './context/GifsContext';
+
+export const App = () => {
+  return (
+    <StaticContext.Provider
+      value={{ name: 'midudev', suscribeteAlCanal: true }}
+    >
+      <div className="App">
+        <section className="App-content">
+          <Link to="/">
+            <img src="/logo.png" alt="Giffy logo" className="App-logo" />
+          </Link>
+          <GifsContextProvider>
+            <Route path="/" component={Home} />
+            <Route path="/search/:keyword" component={SearchResults} />
+            <Route path="/gif/:id" component={Detail} />
+          </GifsContextProvider>
+        </section>
+      </div>
+    </StaticContext.Provider>
+  );
+};
