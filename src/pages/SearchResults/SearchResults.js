@@ -16,7 +16,23 @@ export const SearchResults = ({ params }) => {
   //   });
   // }, [keyword]);
 
-  const { loading, gifs } = useGifs({ keyword });
+  const { loading, gifs, setPage } = useGifs({ keyword });
 
-  return <>{loading ? <Spinner /> : <ListOfGifs gifs={gifs} />}</>;
+  const handleNextPage = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
+  return (
+    <>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <>
+          <h3 className="App-title">{decodeURI(keyword)}</h3>
+          <ListOfGifs gifs={gifs} />
+        </>
+      )}
+      <br />
+      <button onClick={handleNextPage}>Get next page</button>
+    </>
+  );
 };

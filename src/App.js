@@ -18,7 +18,9 @@ export const App = () => {
       <div className="App">
         <section className="App-content">
           <Link to="/">
-            <img src="/logo.png" alt="Giffy logo" className="App-logo" />
+            <figure className="App-logo">
+              <img src="/logo.png" alt="Giffy logo" className="App-logo" />
+            </figure>
           </Link>
           <GifsContextProvider>
             <Route path="/" component={Home} />
