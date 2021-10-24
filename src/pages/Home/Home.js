@@ -1,37 +1,34 @@
-import React, { useState } from 'react';
+import React, { useCallback } from 'react';
 import useLocation from 'wouter/use-location';
 
 import { ListOfGifs } from '../../components/ListOfGifs/ListOfGifs';
+import SearchForm from '../../components/SearchForm/SearchForm';
 import { LazyTrending } from '../../components/TrendingSearches/LazyTrending';
 import { useGifs } from '../../hooks/useGifs';
 
 const Home = () => {
-  const [keyword, setKeyword] = useState('');
+  // const [keyword, setKeyword] = useState('');
   const [path, pushLocation] = useLocation();
   // console.log(location); ['/', ƒ];
 
   const { loading, gifs } = useGifs();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    pushLocation(`/search/${keyword}`);
-  };
-  const handleChange = (e) => {
-    setKeyword(e.target.value);
-  };
+  const handleSubmit = useCallback(
+    ({ keyword }) => {
+      pushLocation(`/search/${keyword}`);
+    },
+    [pushLocation]
+  );
+
+  // const element = useMemo(
+  //   () => <SearchForm onSubmit={handleSubmit} />,
+  //   [handleSubmit]
+  // );
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <button type="submit">Buscar</button>
-        <input
-          placeholder="Search a gif here"
-          onChange={handleChange}
-          type="text"
-          value={keyword}
-        />
-      </form>
-
+      <SearchForm onSubmit={handleSubmit} />
+      {/* {element} */}
       <div className="App-main">
         <div className="App-results">
           <h3 className="App-title">Última búsqueda</h3>

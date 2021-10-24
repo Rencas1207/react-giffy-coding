@@ -33,3 +33,13 @@
 4. Añadimos propiedad de "once" a "useNearScreen.js" y cuando el elemento esta observado entonces si la propiedad "once" es true se desconecta sino pues el setShow(false).
 
 5. Luego en "SearchResults.js" utilizamos el hook de "useCallback" que va permitir que se ejecuta un función dentro de un callback una vez o según la dependencia que le pasemos.
+
+## React.Memo, mejorar el perfomance y deploy en Vercel
+
+1. En nuestro componente "Home.js" separamos el form del buscador de giphy, nombrando el archivo "SearchForm.js". Siempre hay que separa el formulario con lo que vamos a mostrar. Si vamos a Profiler de nuestro navegador, ya con la extension de React DevTools podemos ver que solo se ejecuta en el recuadro el formulario.
+
+2. Ahora si hacemos recarga en la página vemos que en Profiler de DevTools se renderiza o mejor dicho se actualiza el form de que habíamos creado en "SearchForm.js", por lo tanto para que no suceda esto, utilizamos el useCallback en el "Home.js" en la función de "handleSubmit" y colocamos como dependencia "pushLocation". Sin embargo, vemos que "SearchForms.js" se sigue renderizando, entonces utilizamos el hook de useMemo para memorizar el componente. En ese mismo contexto, useMemo no es recomendable para el perfomance de la aplicación, por tanto para ello es recomendable utlilizar React.memo, que en este caso vamos al componente mismo (SearchForm.js) y lo exportamos con React.memo
+
+3. De la misma forma, notamos para el infinite scroll se renderiza los gifs anteriores, entonces en el archivo "Gif.js" usamos React.memo. Ahora supongamos que desde el archivo "ListOfGifs.js", enviamos otro prop (extraInfo) que en Gifs no lo vamos a utilizar, entonces para esto retornamos o comparamos que se memorice siempre y cuando el "id" del "prevProp" con el "nextProp" sean iguales, y ya con esto tendriamos que solo se renderice los nuevo gifs mejorando asi el perfomance.
+
+4. Finalmente, hacemos deploy en Vercel, entonces para ello ejecutamos `npm install vercel -g`, luego que se haya descargado ejecutamos escribimos `vercel` y nos hará unas preguntas para el deploy. Por último, ejecutamos `vercel --prod` para llevarlo a producción
