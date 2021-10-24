@@ -36,7 +36,7 @@ export const useGifs = ({ keyword } = { keyword: null }) => {
       setGifs((prevGifs) => prevGifs.concat(nextGifs));
       setLoadingNextPage(false);
     });
-  }, [page, keywordToUse]);
+  }, [page, keywordToUse, setGifs]);
 
   // La página va cambiar solo para el setPage
   return { loading, loadingNextPage, gifs, setPage };

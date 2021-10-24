@@ -1,11 +1,17 @@
-const { useState, useRef, useEffect } = require('react');
+import { useState, useRef, useEffect } from 'react';
 
-export const useNearScreen = ({ distance = '100px' } = {}) => {
+export const useNearScreen = ({
+  distance = '100px',
+  externalRef,
+  once = true,
+} = {}) => {
   const [show, setShow] = useState(false);
   const element = useRef(null);
 
   useEffect(() => {
     let observer;
+
+    const elementRef = externalRef ? externalRef.current : element.current;
 
     const onChange = (entries, observer) => {
       const el = entries[0];
@@ -14,7 +20,9 @@ export const useNearScreen = ({ distance = '100px' } = {}) => {
         setShow(true);
 
         // Esto servirá para que no se renderize el useState del estado a cada rato
-        observer.disconnect();
+        once && observer.disconnect();
+      } else {
+        !once && setShow(false);
       }
     };
 
@@ -28,12 +36,12 @@ export const useNearScreen = ({ distance = '100px' } = {}) => {
         rootMargin: distance,
       });
 
-      observer.observe(element.current);
+      elementRef && observer.observe(elementRef);
     });
 
     // Si tenemos observer pues lo desconectamos tmbn aquí
     return () => observer && observer.disconnect();
-  }, [distance]);
+  }, [distance, externalRef, once]);
 
   return { show, element };
 };

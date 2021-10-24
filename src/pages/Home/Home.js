@@ -5,7 +5,7 @@ import { ListOfGifs } from '../../components/ListOfGifs/ListOfGifs';
 import { LazyTrending } from '../../components/TrendingSearches/LazyTrending';
 import { useGifs } from '../../hooks/useGifs';
 
-export const Home = () => {
+const Home = () => {
   const [keyword, setKeyword] = useState('');
   const [path, pushLocation] = useLocation();
   // console.log(location); ['/', ƒ];
@@ -46,3 +46,5 @@ export const Home = () => {
     </>
   );
 };
+
+export default Home;
