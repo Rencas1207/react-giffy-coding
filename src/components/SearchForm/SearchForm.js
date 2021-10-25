@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './SearchForm.css';
 
 const SearchForm = ({ onSubmit }) => {
   const [keyword, setKeyword] = useState('');
@@ -12,10 +13,11 @@ const SearchForm = ({ onSubmit }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <button type="submit">Buscar</button>
+    <form onSubmit={handleSubmit} className="c-search">
+      <button className="c-search-btn">Buscar</button>
       <input
-        placeholder="Search a gif here"
+        className="c-search-input"
+        placeholder="Search a gif here..."
         onChange={handleChange}
         type="text"
         value={keyword}

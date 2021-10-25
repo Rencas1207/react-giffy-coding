@@ -6,12 +6,16 @@ import SearchForm from '../../components/SearchForm/SearchForm';
 import { LazyTrending } from '../../components/TrendingSearches/LazyTrending';
 import { useGifs } from '../../hooks/useGifs';
 
+import { Helmet } from 'react-helmet';
+
 const Home = () => {
   // const [keyword, setKeyword] = useState('');
-  const [path, pushLocation] = useLocation();
+  // const [path, pushLocation] = useLocation();
+  const [, pushLocation] = useLocation();
   // console.log(location); ['/', ƒ];
 
-  const { loading, gifs } = useGifs();
+  // const { loading, gifs } = useGifs();
+  const { gifs } = useGifs();
 
   const handleSubmit = useCallback(
     ({ keyword }) => {
@@ -27,6 +31,9 @@ const Home = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Home | Giphy</title>
+      </Helmet>
       <SearchForm onSubmit={handleSubmit} />
       {/* {element} */}
       <div className="App-main">

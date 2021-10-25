@@ -43,3 +43,19 @@
 3. De la misma forma, notamos para el infinite scroll se renderiza los gifs anteriores, entonces en el archivo "Gif.js" usamos React.memo. Ahora supongamos que desde el archivo "ListOfGifs.js", enviamos otro prop (extraInfo) que en Gifs no lo vamos a utilizar, entonces para esto retornamos o comparamos que se memorice siempre y cuando el "id" del "prevProp" con el "nextProp" sean iguales, y ya con esto tendriamos que solo se renderice los nuevo gifs mejorando asi el perfomance.
 
 4. Finalmente, hacemos deploy en Vercel, entonces para ello ejecutamos `npm install vercel -g`, luego que se haya descargado ejecutamos escribimos `vercel` y nos hará unas preguntas para el deploy. Por último, ejecutamos `vercel --prod` para llevarlo a producción
+
+## SEO y Deploy integrado con github
+
+1. Agregamos nuevos estilos para algunos componentes, index.css y app.css.
+
+2. Vemos que hay un bug cuando vamos a detail.js con el id, es que cuando le damos refresh el title por consola nos arroja "undefined". Entonces para solucionar ese error, tenemos que crear un archivo en la carpeta de "services" llamado "getSingleGif.js".(Get GIF by ID Endpoint) [https://developers.giphy.com/docs/api/endpoint#get-gif-by-id]
+
+3. Luego, creamos un hook para la petición "useSingleGif.js" y usamos el otro hook (useGifs.js) dentro del que creamos parar utilizar los "gifs", ahora si en caso no recibimos nada entonces utilizamos el useEffect con el "getSinglesGif.js". De ahí solamente cambiamos un poco el "Detail.js", y ya con eso si hacemos refresh se obtendría el id del elemento.
+
+4. Luego, podemos aplicarle el <Spinner /> o un error 404 en "Detail.js", y los dos estados que provienen del hook de "useSingleGif.js", y con eso también aplicamos en el App.js
+
+5. Ahora con el SEO para React, creamos un hook llamado "useSEO", que nos servirá para colocar el título y la meta etiqueta para el description de toda la página, que en este caso va ir en "Detail.js" donde vamos a utilizar este hook. De la misma forma hacemos para buscar los resultados en "SearchResults.js".
+
+6. Utilizamos "react helmet" ['https://github.com/nfl/react-helmet'] para el SEO, en donde modicamos los archivos de "Detail.js", "Home.js" y "SearchResults.js", luego eliminamos algunos metadatos para el "index.html" dentro del head.
+
+7. Finalmente hacemos la integración de Vercel con github
