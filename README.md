@@ -59,3 +59,11 @@
 6. Utilizamos "react helmet" ['https://github.com/nfl/react-helmet'] para el SEO, en donde modicamos los archivos de "Detail.js", "Home.js" y "SearchResults.js", luego eliminamos algunos metadatos para el "index.html" dentro del head.
 
 7. Finalmente hacemos la integración de Vercel con github
+
+## Utilizamos useReducer
+
+1. Primero, hacemos que el buscador o mejor dicho el componente de "SearchForm.js" aparezca en los resultados al hacer submit entonces para ello movemos el pushLocation al SearchForm y colocamos el componente en "SearchResults.js". De ahí vamos a este enlace[https://developers.giphy.com/docs/api/endpoint#search] para colocar añadir el filtro de rating al buscador. Entonces para ello hacemos el uso del `useState` en "SearchForm.js" colocando como estado rating en 'g' y creando un select con opciones para elegir el rating. Luego en "App.js" colocamos el segmento dinamico para buscar los resultados con la nueva ruta de búsqueda.
+
+2. Pasamos el parametro "rating" a hooks (useGif.js) y servicios(getGif.js), luego añadimos initialKeyword y initialRating para mejorar el formulario en "SearchForm.js"
+
+3. Implementamos el `useReducer` en "SearchForm.js" colocando el reducer, junto con los dispatch y actions, luego lo que hicimos fue separar el hook ("hookSearchForm.js") de useForm donde estaba el reducer en la misma carpeta de SearchForm.

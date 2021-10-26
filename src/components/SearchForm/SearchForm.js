@@ -1,15 +1,32 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useLocation } from 'wouter';
+import { useForm } from './hookSearchForm';
 import './SearchForm.css';
 
-const SearchForm = ({ onSubmit }) => {
-  const [keyword, setKeyword] = useState('');
+const RATINGS = ['g', 'pg', 'pg-13', 'r'];
+
+const SearchForm = ({ initialRating = 'g', initialKeyword = '' }) => {
+  const { keyword, rating, times, updateKeyword, updateRating } = useForm({
+    initialKeyword,
+    initialRating,
+  });
+
+  // const [path, pushLocation] = useLocation();
+  const [, pushLocation] = useLocation();
+  // console.log(location); ['/', ƒ];
+
+  const handleChange = (e) => {
+    updateKeyword(e.target.value);
+    // dispatch({ type: ACTIONS.UPDATE_KEYWORD, payload: e.target.value });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({ keyword });
+    pushLocation(`/search/${keyword}/${rating}`);
   };
-  const handleChange = (e) => {
-    setKeyword(e.target.value);
+
+  const handleChangeRating = (e) => {
+    updateRating(e.target.value);
   };
 
   return (
@@ -22,6 +39,13 @@ const SearchForm = ({ onSubmit }) => {
         type="text"
         value={keyword}
       />
+      <select value={rating} onChange={handleChangeRating}>
+        <option disabled>Rating type</option>
+        {RATINGS.map((rating) => (
+          <option key={rating}>{rating}</option>
+        ))}
+      </select>
+      <small>{times}</small>
     </form>
   );
 };

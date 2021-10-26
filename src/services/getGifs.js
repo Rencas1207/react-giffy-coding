@@ -13,11 +13,16 @@ const fromApiResponseToGifs = (apiResponse) => {
   return [];
 };
 
-export const getGifs = ({ limit = 10, keyword = 'morty', page = 0 } = {}) => {
+export const getGifs = ({
+  limit = 10,
+  keyword = 'morty',
+  page = 0,
+  rating = 'g',
+} = {}) => {
   // En offset cuantos resultado se tiene que incrementar en 25 y 25
   const apiURL = `${API_URL}/gifs/search?api_key=${API_KEY}&q=${keyword}&limit=${limit}&offset=${
     page * limit
-  }&rating=G&lang=en`;
+  }&rating=${rating}&lang=en`;
 
   return fetch(apiURL)
     .then((res) => res.json())

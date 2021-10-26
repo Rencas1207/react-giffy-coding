@@ -4,7 +4,7 @@ import { getGifs } from '../services/getGifs';
 
 const INITIAL_PAGE = 0;
 
-export const useGifs = ({ keyword } = { keyword: null }) => {
+export const useGifs = ({ keyword, rating } = { keyword: null }) => {
   const [loading, setLoading] = useState(false);
   const [loadingNextPage, setLoadingNextPage] = useState(false);
   const [page, setPage] = useState(INITIAL_PAGE);
@@ -19,24 +19,24 @@ export const useGifs = ({ keyword } = { keyword: null }) => {
   useEffect(() => {
     setLoading(true);
 
-    getGifs({ keyword: keywordToUse }).then((gifs) => {
+    getGifs({ keyword: keywordToUse, rating }).then((gifs) => {
       setGifs(gifs);
       setLoading(false);
       // Guardamos la keyword en el localStorage
       localStorage.setItem('lastKeyword', keyword);
     });
-  }, [keyword, keywordToUse, setGifs]);
+  }, [keyword, keywordToUse, setGifs, rating]);
 
   useEffect(() => {
     if (page === INITIAL_PAGE) return;
 
     setLoadingNextPage(true);
 
-    getGifs({ keyword: keywordToUse, page }).then((nextGifs) => {
+    getGifs({ keyword: keywordToUse, rating, page }).then((nextGifs) => {
       setGifs((prevGifs) => prevGifs.concat(nextGifs));
       setLoadingNextPage(false);
     });
-  }, [page, keywordToUse, setGifs]);
+  }, [page, keywordToUse, setGifs, rating]);
 
   // La página va cambiar solo para el setPage
   return { loading, loadingNextPage, gifs, setPage };

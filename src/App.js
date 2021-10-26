@@ -28,7 +28,11 @@ export const App = () => {
             <GifsContextProvider>
               {/* <Route path="/" component={Home} /> */}
               <Route path="/" component={HomePage} />
-              <Route path="/search/:keyword" component={SearchResults} />
+              <Route
+                // Si le colocamos ? decimso que este segmento dinamico sea opcional
+                path="/search/:keyword/:rating?"
+                component={SearchResults}
+              />
               <Route path="/gif/:id" component={Detail} />
 
               {/* AQUÍ IMPLETAMOS LA RUTA O PAGINA PARA EL 404 */}

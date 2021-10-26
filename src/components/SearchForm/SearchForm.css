@@ -5,6 +5,7 @@
   padding-bottom: 0.5rem;
   background-color: var(--theme-body-bg);
   margin: 0 auto 30px;
+  outline: none;
 }
 
 .c-search-btn {
@@ -13,11 +14,16 @@
   color: #fff;
   padding: 8px 16px;
   font-size: 16px;
+  outline: none;
 }
 
 .c-search-input {
   font-size: 16px;
   border: none;
   padding: 4px 16px;
+  outline: none;
+}
+
+select {
   outline: none;
 }
